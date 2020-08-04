@@ -1,0 +1,31 @@
+.card {
+  margin: 15px 5px;
+  padding: 15px;
+  box-shadow: 0 1px 6px 0 $divider-color;
+
+  &__header {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    &__view-details {
+      padding: 0;
+      background-color: transparent;
+      border: none;
+      color: $primary-color-dark;
+    }
+  }
+
+  &__body {
+    h1 {
+      margin: 5px 0 10px 0;
+      font-size: 18px;
+      color: $primary-text-color;
+    }
+
+    p {
+      margin: 0;
+      color: $secondary-text-color;
+    }
+  }
+}

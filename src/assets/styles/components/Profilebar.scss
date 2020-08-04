@@ -1,0 +1,28 @@
+.profile {
+  display: flex;
+  justify-content: space-between;
+  height: 40px;
+  padding: 20px;
+  &__username {
+    display: flex;
+    align-items: center;
+    width: 50%;
+    color: $primary-text-color;
+  }
+  &__option {
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    color: $secondary-text-color;
+    &:not(:last-child) {
+      border-right: 1px solid $divider-color;
+    }
+    p {
+      padding: 0 20px;
+    }
+    img {
+      width: 30px;
+      height: 30px;
+    }
+  }
+}

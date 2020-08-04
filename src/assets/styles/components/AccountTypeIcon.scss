@@ -1,0 +1,21 @@
+@mixin iconCircle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: $primary-color-text;
+  font-weight: bold;
+  font-size: 12px;
+  border-radius: 50%;
+}
+
+.cdt-icon {
+  background-color: #e91e63;
+  @include iconCircle();
+}
+
+.ca-icon {
+  background-color: #009688;
+  @include iconCircle();
+}
