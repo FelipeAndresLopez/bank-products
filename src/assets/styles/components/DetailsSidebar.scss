@@ -1,31 +1,28 @@
 .details-sidebar {
   display: flex;
   flex-direction: column;
-  width: 15%;
-  height: 100vh;
-  position: fixed;
+  width: 20%;
+  min-height: 100vh;
+  padding: 5px;
   right: 0;
   box-shadow: 0px 20px 33px 0px rgba(0, 0, 0, 0.5);
-  background-color: $primary-color;
-  &__logo {
-    text-align: center;
-    background-color: $primary-color-dark;
+  &__header {
+    display: flex;
+    justify-content: flex-end;
+    button {
+      width: 10%;
+      @include resetButton();
+    }
     img {
-      width: 75%;
+      width: 100%;
+      cursor: pointer;
     }
   }
-  &__options {
-    padding-left: 0;
-    text-align: center;
-    text-transform: uppercase;
-    list-style: none;
-    cursor: pointer;
-    color: $primary-color-text;
-  }
-  &__options li {
-    padding: 20px;
-    &:hover {
-      background-color: $primary-color-dark;
+  &__body {
+    padding: 0 20px;
+    h4 {
+      margin-top: 5px;
+      color: $primary-text-color;
     }
   }
 }

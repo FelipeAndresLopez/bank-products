@@ -7,6 +7,12 @@ $primary-text-color: #212121;
 $secondary-text-color: #757575;
 $divider-color: #bdbdbd;
 
+@mixin resetButton {
+  padding: 0;
+  background-color: transparent;
+  border: none;
+}
+
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;

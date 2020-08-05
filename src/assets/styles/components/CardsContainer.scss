@@ -1,8 +1,13 @@
 .cards-container {
+  grid-column: 1;
+  grid-column-end: 3;
   &__title {
     word-break: break-all;
+    font-size: 18px;
+    color: $primary-text-color;
   }
-
   &__body {
+    display: flex;
+    flex-wrap: wrap;
   }
 }

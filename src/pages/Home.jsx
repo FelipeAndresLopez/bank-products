@@ -1,14 +1,13 @@
 import React from 'react';
-import Sidebar from '../components/Sidebar';
+import MenuSidebar from '../components/MenuSidebar';
 import Profilebar from '../components/Profilebar';
 import Products from '../components/Products';
 import DetailsSidebar from '../components/DetailsSidebar';
 
-
 const Home = () => {
   return (
     <main>
-      <Sidebar />
+      <MenuSidebar />
       <section>
         <Profilebar />
         <Products />

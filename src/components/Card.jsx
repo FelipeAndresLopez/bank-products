@@ -1,39 +1,77 @@
 import React, { Component } from 'react';
-import { CdtIcon, CreditIcon, CreditCardIcon, CurrentAccountIcon, DepositAccountIcon } from '../components/AccountTypeIcon';
-import DetailsSidebar from './DetailsSidebar';
+import { connect } from 'react-redux';
+import moment from 'moment';
+import {
+  CdtIcon,
+  CreditIcon,
+  CreditCardIcon,
+  CurrentAccountIcon,
+  DepositAccountIcon
+} from './AccountTypeIcon';
+
+import Progressbar from './Progressbar';
+
+import { showAccountInfo } from '../Actions/Index';
 
 class Card extends Component {
 
-  getDataAccordingToProductType = (accountInfo) => {
-    switch (accountInfo.typeAccount) {
+  formatCurrency = (value) => {
+    const formatter = new Intl.NumberFormat('es-CO', {
+      style: 'currency',
+      currency: 'COP',
+      minimumFractionDigits: 0
+    });
+    return formatter.format(value);
+  }
+
+  getDataAccordingToProductType = ({ typeAccount, productAccountBalances, accountInformation, id, dueDate }) => {
+    switch (typeAccount) {
       case 'CERTIFIED_DEPOSIT_TERM':
         return {
           icon: <CdtIcon />,
-          amount: accountInfo.productAccountBalances.saldo_pendiente_pago.amount
+          amount: this.formatCurrency(productAccountBalances.saldo_pendiente_pago.amount),
+          accountIdentifier: accountInformation.accountIdentifier
         };
 
       case 'CREDIT':
         return {
           icon: <CreditIcon />,
-          amount: accountInfo.id
+          amount: id,
+          accountIdentifier: accountInformation.accountIdentifier
         };
 
       case 'CREDIT_CARD':
         return {
           icon: <CreditCardIcon />,
-          amount: accountInfo.productAccountBalances.saldo_actual.amount
+          amount: this.formatCurrency(productAccountBalances.cupo_disponible_avances_pesos.amount),
+          accountIdentifier: String(accountInformation.accountIdentifier).replace(/\d{4}(?=\d{4})/g, '**** '),
+          dueDate: (
+            <div>
+              <p>Fecha de corte:</p>
+              <h1>{moment(dueDate, 'LT').format('LL')}</h1>
+            </div>
+          ),
+          pagoTotalPesos: (
+            <div>
+              <p>Total gastado: {this.formatCurrency(productAccountBalances.pago_total_pesos.amount)}</p>
+              <Progressbar productAccountBalances={productAccountBalances} />
+            </div>
+
+          )
         };
 
       case 'CURRENT_ACCOUNT':
         return {
           icon: <CurrentAccountIcon />,
-          amount: accountInfo.productAccountBalances.saldo_disponible.amount
+          amount: this.formatCurrency(productAccountBalances.saldo_disponible.amount),
+          accountIdentifier: accountInformation.accountIdentifier
         };
 
       case 'DEPOSIT_ACCOUNT':
         return {
           icon: <DepositAccountIcon />,
-          amount: accountInfo.productAccountBalances.saldo_disponible.amount
+          amount: this.formatCurrency(productAccountBalances.saldo_disponible.amount),
+          accountIdentifier: accountInformation.accountIdentifier
         };
 
       default:
@@ -47,19 +85,18 @@ class Card extends Component {
   render() {
     const {
       accountInformation: {
-        accountIdentifier,
         productType
       }
     } = this.props.accountInfo;
 
     const accountInfo = this.getDataAccordingToProductType(this.props.accountInfo);
-    console.log(accountInfo)
+    console.log(this.props.accountInfo)
 
     return (
       <div className="card">
         <div className="card__header">
           {accountInfo.icon}
-          <button type="button" className="card__header__view-details" onClick={() => (<DetailsSidebar test="Hello" />)}>
+          <button type="button" className="card__header__view-details" onClick={() => this.props.showAccountInfo(this.props.accountInfo)}>
             Ver detalle
           </button>
         </div>
@@ -68,15 +105,17 @@ class Card extends Component {
             {productType}
           </h1>
           <p>
-            Nro. {accountIdentifier}
+            Nro. {accountInfo.accountIdentifier}
           </p>
           <br />
           <p>Saldo disponible:</p>
           <h1>{accountInfo.amount}</h1>
+          {accountInfo.dueDate}
+          {accountInfo.pagoTotalPesos}
         </div>
       </div>
     );
   }
 }
 
-export default Card;
+export default connect(null, { showAccountInfo })(Card);

@@ -1,0 +1,10 @@
+.progressbar {
+  width: 100%;
+  margin-top: 5px;
+  background-color: $primary-color-light;
+
+  &__progress {
+    height: 10px;
+    background-color: $primary-color;
+  }
+}

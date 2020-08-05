@@ -1,14 +1,13 @@
 import React from 'react';
 import adlLogo from '../assets/static/adl-logo.png';
 
-const Sidebar = () => {
+const MenuSidebar = () => {
   return (
-    <div className="sidebar">
-      <div className="sidebar__logo">
+    <div className="menu-sidebar">
+      <div className="menu-sidebar__logo">
         <img src={adlLogo} alt="Logo" />
       </div>
-
-      <ul className="sidebar__options">
+      <ul className="menu-sidebar__options">
         <li>Tus productos</li>
         <li>
           Tu origanizador
@@ -24,4 +23,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default MenuSidebar;
