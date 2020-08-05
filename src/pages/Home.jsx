@@ -1,10 +1,9 @@
 import React from 'react';
-
 import Sidebar from '../components/Sidebar';
 import Profilebar from '../components/Profilebar';
-import Card from '../components/Card';
-import products from '../data.json';
-import CardContainer from '../components/CardContainer';
+import Products from '../components/Products';
+import DetailsSidebar from '../components/DetailsSidebar';
+
 
 const Home = () => {
   return (
@@ -12,12 +11,9 @@ const Home = () => {
       <Sidebar />
       <section>
         <Profilebar />
-        <CardContainer>
-          {
-            products.product.map((item) => item.accountInformation.bank === 'BANCO_1' && <Card accountInfo={item} />)
-          }
-        </CardContainer>
+        <Products />
       </section>
+      <DetailsSidebar />
     </main>
   );
 };

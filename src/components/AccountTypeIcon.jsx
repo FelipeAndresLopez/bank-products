@@ -6,8 +6,26 @@ export const CdtIcon = () => (
   </div>
 );
 
-export const CaIcon = () => (
-  <div className="ca-icon">
+export const CreditIcon = () => (
+  <div className="credit-icon">
+    CR
+  </div>
+);
+
+export const CreditCardIcon = () => (
+  <div className="credit-card-icon">
+    CC
+  </div>
+);
+
+export const CurrentAccountIcon = () => (
+  <div className="current-account-icon">
     CA
+  </div>
+);
+
+export const DepositAccountIcon = () => (
+  <div className="deposit-account-icon">
+    DA
   </div>
 );

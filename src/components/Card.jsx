@@ -1,16 +1,46 @@
 import React, { Component } from 'react';
-import { CdtIcon, CaIcon } from '../components/AccountTypeIcon';
-import PropTypes from 'prop-types';
+import { CdtIcon, CreditIcon, CreditCardIcon, CurrentAccountIcon, DepositAccountIcon } from '../components/AccountTypeIcon';
+import DetailsSidebar from './DetailsSidebar';
 
 class Card extends Component {
 
-  setIcon = (productType) => {
-    switch (productType) {
+  getDataAccordingToProductType = (accountInfo) => {
+    switch (accountInfo.typeAccount) {
+      case 'CERTIFIED_DEPOSIT_TERM':
+        return {
+          icon: <CdtIcon />,
+          amount: accountInfo.productAccountBalances.saldo_pendiente_pago.amount
+        };
+
+      case 'CREDIT':
+        return {
+          icon: <CreditIcon />,
+          amount: accountInfo.id
+        };
+
+      case 'CREDIT_CARD':
+        return {
+          icon: <CreditCardIcon />,
+          amount: accountInfo.productAccountBalances.saldo_actual.amount
+        };
+
+      case 'CURRENT_ACCOUNT':
+        return {
+          icon: <CurrentAccountIcon />,
+          amount: accountInfo.productAccountBalances.saldo_disponible.amount
+        };
+
       case 'DEPOSIT_ACCOUNT':
-        return <CdtIcon />;
+        return {
+          icon: <DepositAccountIcon />,
+          amount: accountInfo.productAccountBalances.saldo_disponible.amount
+        };
 
       default:
-        return null;
+        return {
+          icon: null,
+          amount: ''
+        };
     }
   }
 
@@ -19,17 +49,17 @@ class Card extends Component {
       accountInformation: {
         accountIdentifier,
         productType
-      },
-      productAccountBalances: {
-        saldo_disponible: { amount }
       }
     } = this.props.accountInfo;
+
+    const accountInfo = this.getDataAccordingToProductType(this.props.accountInfo);
+    console.log(accountInfo)
 
     return (
       <div className="card">
         <div className="card__header">
-          {this.setIcon(productType)}
-          <button type="button" className="card__header__view-details">
+          {accountInfo.icon}
+          <button type="button" className="card__header__view-details" onClick={() => (<DetailsSidebar test="Hello" />)}>
             Ver detalle
           </button>
         </div>
@@ -42,7 +72,7 @@ class Card extends Component {
           </p>
           <br />
           <p>Saldo disponible:</p>
-          <h1>{amount}</h1>
+          <h1>{accountInfo.amount}</h1>
         </div>
       </div>
     );
