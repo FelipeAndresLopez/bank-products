@@ -13,6 +13,8 @@ const setDetailsByTypeAccount = (accountInfo) => {
     case 'CERTIFIED_DEPOSIT_TERM':
       return (
         <>
+          <Detail label="Nro." value={accountInfo.accountInformation.accountIdentifier} />
+
           <Detail label="Fecha de apertura" value={moment(accountInfo.openedDate, dateFormats).format('LL')} />
           <Detail label="Fecha de cierre" value={moment(accountInfo.closedDate, dateFormats).format('LL')} />
           <Detail label="Fecha de vencimiento" value={moment(accountInfo.dueDate, dateFormats).format('LL')} />
@@ -31,14 +33,22 @@ const setDetailsByTypeAccount = (accountInfo) => {
       );
 
     case 'CREDIT':
-      return <Detail label="Asegurada" value={accountInfo.locked ? 'Si' : 'No'} />;
+      return (
+        <>
+          <Detail label="Nro." value={accountInfo.accountInformation.accountIdentifier} />
+          <Detail label="Asegurada" value={accountInfo.locked ? 'Si' : 'No'} />
+        </>
+      );
 
     case 'CREDIT_CARD':
       return (
         <>
+          <Detail label="Nro." value={String(accountInfo.accountInformation.accountIdentifier).replace(/\d{4}(?=\d{4})/g, '**** ')} />
           <Detail label="Capacidad" value={accountInfo.capacity} />
           <Detail label="Fecha de vencimiento" value={moment(accountInfo.dueDate, dateFormats).format('LL')} />
           <Detail label="Asegurada" value={accountInfo.locked ? 'Si' : 'No'} />
+
+
           <hr />
           <Detail label="Cupo disponible avance en pesos" value={formatCurrency(accountInfo.productAccountBalances?.cupo_disponible_avances_pesos?.amount)} />
           <Detail label="Cupo disponible compras en pesos" value={formatCurrency(accountInfo.productAccountBalances?.cupo_disponible_compras_pesos?.amount)} />
@@ -53,6 +63,8 @@ const setDetailsByTypeAccount = (accountInfo) => {
     case 'CURRENT_ACCOUNT':
       return (
         <>
+          <Detail label="Nro." value={accountInfo.accountInformation.accountIdentifier} />
+
           <Detail label="Fecha de vencimiento" value={moment(accountInfo.dueDate, dateFormats).format('LL')} />
           <Detail label="Última transacción" value={moment(accountInfo.lastTransactionDate, dateFormats).format('LL')} />
           <Detail label="Asegurada" value={accountInfo.locked ? 'Si' : 'No'} />
@@ -75,6 +87,8 @@ const setDetailsByTypeAccount = (accountInfo) => {
     case 'DEPOSIT_ACCOUNT':
       return (
         <>
+          <Detail label="Nro." value={accountInfo.accountInformation.accountIdentifier} />
+
           <Detail label="Fecha de vencimiento" value={moment(accountInfo.dueDate, dateFormats).format('LL')} />
           <Detail label="Última transacción" value={moment(accountInfo.lastTransactionDate, dateFormats).format('LL')} />
           <Detail label="Asegurada" value={accountInfo.locked ? 'Si' : 'No'} />
@@ -107,7 +121,6 @@ const DetailsSidebar = (props) => {
         </div>
         <div className="details-sidebar__body">
           <Detail label="Tipo de cuenta" value={accountInfo.typeAccount} />
-          <Detail label="Nro." value={accountInfo.accountInformation.accountIdentifier} />
           <Detail label="Banco" value={accountInfo.accountInformation.bank} />
           {setDetailsByTypeAccount(accountInfo)}
         </div>
