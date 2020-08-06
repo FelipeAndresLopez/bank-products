@@ -18,7 +18,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -37,11 +38,22 @@
     ]
   },
   "devDependencies": {
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^6.6.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.5",
-    "eslint-plugin-react-hooks": "^4.0.8"
+    "eslint-plugin-react-hooks": "^4.0.8",
+    "jest": "^26.2.2"
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/__test__/setupTest.js"
+    ],
+    "moduleNameMapper": {
+      "\\.(scss|css)$": "<rootDir>/src/__mocks_/styleMock.js"
+    }
   }
 }

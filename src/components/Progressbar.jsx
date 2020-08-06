@@ -7,7 +7,7 @@ const Progressbar = ({ productAccountBalances }) => {
     <div className="progressbar">
       <div className="progressbar__progress" style={{ width: `${progress}%` }} />
     </div>
-  )
-}
+  );
+};
 
-export default Progressbar
+export default Progressbar;

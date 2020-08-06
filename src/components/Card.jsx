@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
+
 import {
   CdtIcon,
   CreditIcon,
@@ -10,74 +11,64 @@ import {
 } from './AccountTypeIcon';
 
 import Progressbar from './Progressbar';
-
 import { showAccountInfo } from '../Actions/Index';
+import { formatCurrency } from './Utils';
 
 class Card extends Component {
-
-  formatCurrency = (value) => {
-    const formatter = new Intl.NumberFormat('es-CO', {
-      style: 'currency',
-      currency: 'COP',
-      minimumFractionDigits: 0
-    });
-    return formatter.format(value);
-  }
-
-  getDataAccordingToProductType = ({ typeAccount, productAccountBalances, accountInformation, id, dueDate }) => {
+  getDataAccordingToProductType = ({ typeAccount, productAccountBalances, accountInformation, dueDate }) => {
     switch (typeAccount) {
       case 'CERTIFIED_DEPOSIT_TERM':
         return {
           icon: <CdtIcon />,
-          amount: this.formatCurrency(productAccountBalances.saldo_pendiente_pago.amount),
+          amount: formatCurrency(productAccountBalances.saldo_pendiente_pago.amount),
           accountIdentifier: accountInformation.accountIdentifier
         };
 
       case 'CREDIT':
         return {
           icon: <CreditIcon />,
-          amount: id,
+          amount: 'No disponible',
           accountIdentifier: accountInformation.accountIdentifier
         };
 
       case 'CREDIT_CARD':
         return {
           icon: <CreditCardIcon />,
-          amount: this.formatCurrency(productAccountBalances.cupo_disponible_avances_pesos.amount),
+          amount: formatCurrency(productAccountBalances.cupo_disponible_avances_pesos.amount),
           accountIdentifier: String(accountInformation.accountIdentifier).replace(/\d{4}(?=\d{4})/g, '**** '),
           dueDate: (
             <div>
               <p>Fecha de corte:</p>
-              <h1>{moment(dueDate, 'LT').format('LL')}</h1>
+              <h1>{moment(dueDate, 'YYYY-MM-DD hmmsss').format('LL')}</h1>
             </div>
           ),
           pagoTotalPesos: (
             <div>
-              <p>Total gastado: {this.formatCurrency(productAccountBalances.pago_total_pesos.amount)}</p>
+              <p>Total gastado: {formatCurrency(productAccountBalances.pago_total_pesos.amount)}</p>
               <Progressbar productAccountBalances={productAccountBalances} />
             </div>
-
           )
         };
 
       case 'CURRENT_ACCOUNT':
         return {
           icon: <CurrentAccountIcon />,
-          amount: this.formatCurrency(productAccountBalances.saldo_disponible.amount),
+          amount: formatCurrency(productAccountBalances.saldo_disponible.amount),
           accountIdentifier: accountInformation.accountIdentifier
         };
 
       case 'DEPOSIT_ACCOUNT':
         return {
           icon: <DepositAccountIcon />,
-          amount: this.formatCurrency(productAccountBalances.saldo_disponible.amount),
+          amount: formatCurrency(productAccountBalances.saldo_disponible.amount),
           accountIdentifier: accountInformation.accountIdentifier
         };
 
       default:
         return {
           icon: null,
-          amount: ''
+          amount: '',
+          accountIdentifier: ''
         };
     }
   }
@@ -90,7 +81,6 @@ class Card extends Component {
     } = this.props.accountInfo;
 
     const accountInfo = this.getDataAccordingToProductType(this.props.accountInfo);
-    console.log(this.props.accountInfo)
 
     return (
       <div className="card">
